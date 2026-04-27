@@ -1,0 +1,31 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "first_name": "Admin",
+      "last_name": "Cultura",
+      "second_surname": "Fit",
+      "email": "admin@culturafit.com",
+      "password": "admin123",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "first_name": "Juan",
+      "last_name": "Pérez",
+      "second_surname": "García",
+      "email": "juan@example.com",
+      "password": "123456",
+      "role": "user"
+    },
+    {
+      "id": 3,
+      "first_name": "María",
+      "last_name": "López",
+      "second_surname": "Rodríguez",
+      "email": "maria@example.com",
+      "password": "123456",
+      "role": "user"
+    }
+  ]
+}

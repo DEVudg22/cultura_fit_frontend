@@ -1,0 +1,84 @@
+{
+  "productos": [
+    {
+      "id": 1,
+      "suplemento": "Whey Protein Gold Standard",
+      "marca": "Optimum Nutrition",
+      "presentacion": "2.5 kg",
+      "stock": 15,
+      "precio": 1250.00,
+      "descripcion": "Proteína de suero de leche de alta calidad. Ideal para recuperación muscular post-entreno. Sabor chocolate.",
+      "imagen": "whey-protein"
+    },
+    {
+      "id": 2,
+      "suplemento": "Creatina Monohidratada",
+      "marca": "GNC",
+      "presentacion": "300 gr",
+      "stock": 8,
+      "precio": 450.00,
+      "descripcion": "Aumenta la fuerza y el rendimiento en ejercicios de alta intensidad. Sin sabor, fácil de mezclar.",
+      "imagen": "creatina"
+    },
+    {
+      "id": 3,
+      "suplemento": "BCAA 2:1:1",
+      "marca": "MuscleTech",
+      "presentacion": "400 gr",
+      "stock": 22,
+      "precio": 580.00,
+      "descripcion": "Aminoácidos de cadena ramificada para reducir la fatiga muscular y acelerar la recuperación.",
+      "imagen": "bcaa"
+    },
+    {
+      "id": 4,
+      "suplemento": "L-Carnitina 3000",
+      "marca": "NBC",
+      "presentacion": "500 ml",
+      "stock": 12,
+      "precio": 390.00,
+      "descripcion": "Ayuda en la quema de grasas y mejora el rendimiento deportivo. Sabor frutos rojos.",
+      "imagen": "carnitina"
+    },
+    {
+      "id": 5,
+      "suplemento": "Multivitamínico Deportivo",
+      "marca": "Universal Nutrition",
+      "presentacion": "120 tabletas",
+      "stock": 30,
+      "precio": 350.00,
+      "descripcion": "Complejo vitamínico diseñado para deportistas que buscan optimizar su salud y rendimiento.",
+      "imagen": "multivitaminico"
+    },
+    {
+      "id": 6,
+      "suplemento": "Caseína de Liberación Lenta",
+      "marca": "Dymatize",
+      "presentacion": "2 kg",
+      "stock": 5,
+      "precio": 1100.00,
+      "descripcion": "Proteína de absorción lenta ideal para tomar antes de dormir, promoviendo la recuperación nocturna.",
+      "imagen": "caseina"
+    },
+    {
+      "id": 7,
+      "suplemento": "Pre-Entreno Explosive",
+      "marca": "BSN",
+      "presentacion": "30 dosis",
+      "stock": 18,
+      "precio": 750.00,
+      "descripcion": "Aumenta la energía, el enfoque y la vascularidad durante el entrenamiento. Sabor frutas tropicales.",
+      "imagen": "preentreno"
+    },
+    {
+      "id": 8,
+      "suplemento": "Glutamina",
+      "marca": "Now Sports",
+      "presentacion": "500 gr",
+      "stock": 25,
+      "precio": 420.00,
+      "descripcion": "Aminoácido esencial para la recuperación muscular y la salud del sistema inmunológico.",
+      "imagen": "glutamina"
+    }
+  ]
+}
