@@ -23,10 +23,11 @@ export const createVenta = async (ventaData) => {
           }
         }
         
+        // CORRECCIÓN: Asegurar que la estructura del cliente sea la que espera el Dashboard
         const nuevaVenta = {
           fecha: ventaData.fecha || new Date().toISOString().split('T')[0],
           hora: ventaData.hora || new Date().toLocaleTimeString(),
-          cliente: { ...ventaData.cliente },
+          cliente: { ...ventaData.cliente }, // Toma el objeto cliente completo
           total_general: ventaData.productos.reduce((acc, curr) => acc + (curr.precio * curr.cantidad), 0),
           productos: ventaData.productos
         };
@@ -44,7 +45,6 @@ export const createVenta = async (ventaData) => {
   });
 };
 
-// Exportación unificada para evitar errores de importación en otros archivos
 export const saleService = {
   getVentas: getVentasService,
   createVenta

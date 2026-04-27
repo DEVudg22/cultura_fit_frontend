@@ -34,15 +34,20 @@ const Checkout = () => {
     
     try {
       const fecha = new Date();
+      // CORRECCIÓN: Estructurar los datos para que coincidan con saleService y Dashboard
       const ventaData = {
-        nombre: formData.nombre,
-        paterno: formData.paterno,
-        materno: formData.materno,
+        cliente: {
+          nombre: formData.nombre,
+          paterno: formData.paterno,
+          materno: formData.materno,
+        },
         fecha: fecha.toISOString().split('T')[0],
         hora: fecha.toTimeString().split(' ')[0],
         productos: cartItems.map(item => ({
           id_producto: item.id,
-          cantidad: item.cantidad
+          cantidad: item.cantidad,
+          precio: item.precio,
+          nombre: item.suplemento
         }))
       };
       
