@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import styles from './Login.module.css';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import styles from "./Login.module.css";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, token } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     const result = await login(email, password);
-    
+
     if (result.success) {
-      navigate('/');
+      navigate("/");
     }
     setLoading(false);
   };
@@ -37,7 +37,7 @@ const Login = () => {
               placeholder="ejemplo@culturafit.com"
             />
           </div>
-          
+
           <div className={styles.formGroup}>
             <label>Contraseña</label>
             <input
@@ -48,16 +48,16 @@ const Login = () => {
               placeholder="••••••"
             />
           </div>
-          
+
           <button type="submit" disabled={loading} className={styles.loginBtn}>
-            {loading ? 'Ingresando...' : 'Ingresar'}
+            {loading ? "Ingresando..." : "Ingresar"}
           </button>
         </form>
-        
+
         <p className={styles.registerLink}>
           ¿No tienes cuenta? <Link to="/register">Regístrate aquí</Link>
         </p>
-        
+
         <div className={styles.demoCredentials}>
           <p>Cuentas de demostración:</p>
           <p>📧 admin@culturafit.com / admin123 (Admin)</p>
