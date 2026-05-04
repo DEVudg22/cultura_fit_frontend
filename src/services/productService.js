@@ -1,4 +1,4 @@
-import { getProductos, getProductoById, searchProductos } from './mockService';
+import { getProductos, getProductoById, searchProductos } from "./mockService";
 
 // Obtener todos los productos
 export const getInventario = async () => {
@@ -17,17 +17,17 @@ export const getProductoByIdService = async (id) => {
       if (producto) {
         resolve(producto);
       } else {
-        reject({ message: 'Producto no encontrado' });
+        reject({ message: "Producto no encontrado" });
       }
     }, 200);
   });
 };
 
 // Buscar productos
-export const searchProductosService = async (termino) => {
+export const searchProductosService = async (termino, data) => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(searchProductos(termino));
+      resolve(searchProductos(termino, data));
     }, 300);
   });
 };
@@ -37,7 +37,7 @@ export const getMarcas = async () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const productos = getProductos();
-      const marcas = [...new Set(productos.map(p => p.marca))];
+      const marcas = [...new Set(productos.map((p) => p.marca))];
       resolve(marcas.map((nombre, index) => ({ id: index + 1, nombre })));
     }, 200);
   });
@@ -48,7 +48,11 @@ export const getSuplementos = async () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const productos = getProductos();
-      const suplementos = productos.map(p => ({ id: p.id, nombre: p.suplemento, marca: p.marca }));
+      const suplementos = productos.map((p) => ({
+        id: p.id,
+        nombre: p.suplemento,
+        marca: p.marca,
+      }));
       resolve(suplementos);
     }, 200);
   });
