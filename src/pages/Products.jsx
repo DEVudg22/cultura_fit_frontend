@@ -14,30 +14,19 @@ const Products = () => {
   const [searchTerm, setSearchTerm] = useState(""); //estado para capturar la busqueda
   const [resultados, setResultados] = useState([]); //estado para presentar los resultados
 
-  //filtrar los productos PENDIENTE
-  /*const handleSearch = (e) => {
+  //filtrar los productos
+  const handleSearch = (e) => {
     setSearchTerm(e.target.value);
-
-    const filteredData = data.filter((item) => {
-      if (!searchTerm.trim()) {
-        return data;
-      } else {
-        return (
-          item.suplemento.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.marca.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      }
-    });
-    /////// otro codigo
-    setResultados(filteredData);
-
-    /*const filteredData = data.filter(
+    const filteredData = data.filter(
       (item) =>
-        item.suplemento.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.marca.toLowerCase().includes(searchTerm.toLowerCase()),
+        item.suplemento
+          .toLowerCase()
+          .includes(searchTerm.trim().toLowerCase()) ||
+        item.marca.toLowerCase().includes(searchTerm.trim().toLowerCase()),
     );
+
     setResultados(filteredData);
-  };*/
+  };
 
   return (
     <div className={styles.container}>
@@ -48,13 +37,16 @@ const Products = () => {
           type="text"
           placeholder="Buscar por nombre o marca...EN CONSTRUCCION"
           value={searchTerm}
-          onChange={""}
+          onChange={handleSearch}
           className={styles.searchInput}
-          disabled={true}
+          disabled={false}
         />
       </div>
 
-      <ProductList productos={data} loading={loading} />
+      <ProductList
+        productos={resultados.length > 0 ? resultados : data}
+        loading={loading}
+      />
     </div>
   );
 };

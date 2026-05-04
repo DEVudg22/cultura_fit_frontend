@@ -1,29 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { getInventario } from '../services/productService';
-import ProductCard from '../components/Products/ProductCard';
-import LoadingSpinner from '../components/Common/LoadingSpinner';
-import styles from './Home.module.css';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import ProductCard from "../components/Products/ProductCard";
+import LoadingSpinner from "../components/Common/LoadingSpinner";
+import styles from "./Home.module.css";
+import { useFetch } from "../hooks/useFetch";
 
 const Home = () => {
-  const [destacados, setDestacados] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadDestacados();
-  }, []);
-
-  const loadDestacados = async () => {
-    try {
-      setLoading(true);
-      const data = await getInventario();
-      setDestacados(data.slice(0, 4));
-    } catch (error) {
-      console.error('Error al cargar productos:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { data, loading, error } = useFetch(
+    "https://app-cebc1114-d7a9-4e24-84f6-4cb3c90eeb6b.cleverapps.io/api/inventarios",
+  );
 
   if (loading) return <LoadingSpinner />;
 
@@ -42,9 +27,12 @@ const Home = () => {
       <section className={styles.featured}>
         <h2 className={styles.sectionTitle}>Productos Destacados</h2>
         <div className={styles.productGrid}>
-          {destacados.map(producto => (
-            <ProductCard key={producto.id} producto={producto} />
-          ))}
+          {data
+            .sort(() => 0.5 - Math.random())
+            .slice(0, 3)
+            .map((producto) => (
+              <ProductCard key={producto.id} producto={producto} />
+            ))}
         </div>
         <div className={styles.viewAll}>
           <Link to="/products" className={styles.viewAllBtn}>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getProductoByIdService } from "../services/productService";
 import { useCart } from "../contexts/CartContext";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
 import styles from "./ProductDetail.module.css";
@@ -17,25 +16,6 @@ const ProductDetail = () => {
   const { data, loading, error } = useFetch(
     `https://app-cebc1114-d7a9-4e24-84f6-4cb3c90eeb6b.cleverapps.io/api/inventarios/${id}`,
   );
-
-  console.log(data);
-
-  /*useEffect(() => {
-    loadProducto();
-  }, [id]);
-
-  const loadProducto = async () => {
-    try {
-      setLoading(true);
-      const data = await getProductoByIdService(id);
-      setProducto(data);
-    } catch (error) {
-      console.error("Error al cargar producto:", error);
-      navigate("/products");
-    } finally {
-      setLoading(false);
-    }
-  };*/
 
   const handleAddToCart = () => {
     addToCart(data, cantidad);

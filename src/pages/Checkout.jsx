@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useCart } from '../contexts/CartContext';
-import { createVenta } from '../services/saleService';
-import toast from 'react-hot-toast';
-import styles from './Checkout.module.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../contexts/CartContext";
+import { createVenta } from "../services/saleService";
+import toast from "react-hot-toast";
+import styles from "./Checkout.module.css";
+import { usePost } from "../hooks/usePost";
 
 const Checkout = () => {
+  const { data, loading, error, postData } = usePost(
+    "https://app-cebc1114-d7a9-4e24-84f6-4cb3c90eeb6b.cleverapps.io/api/ventas",
+  );
   const { cartItems, totalPrice, clearCart } = useCart();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    nombre: '',
-    paterno: '',
-    materno: '',
+    nombre: "",
+    paterno: "",
+    materno: "",
   });
 
   const handleChange = (e) => {
@@ -24,63 +27,57 @@ const Checkout = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.nombre || !formData.paterno) {
-      toast.error('Nombre y apellido paterno son obligatorios');
+      toast.error("Nombre y apellido paterno son obligatorios");
       return;
     }
 
-    setLoading(true);
-    
     try {
       const fecha = new Date();
       // CORRECCIÓN: Estructurar los datos para que coincidan con saleService y Dashboard
       const ventaData = {
-        cliente: {
-          nombre: formData.nombre,
-          paterno: formData.paterno,
-          materno: formData.materno,
-        },
-        fecha: fecha.toISOString().split('T')[0],
-        hora: fecha.toTimeString().split(' ')[0],
-        productos: cartItems.map(item => ({
+        nombre: formData.nombre,
+        paterno: formData.paterno,
+        materno: formData.materno,
+        fecha: fecha.toISOString().split("T")[0],
+        hora: fecha.toTimeString().split(" ")[0],
+        productos: cartItems.map((item) => ({
           id_producto: item.id,
           cantidad: item.cantidad,
-          precio: item.precio,
-          nombre: item.suplemento
-        }))
+        })),
       };
-      
-      const response = await createVenta(ventaData);
-      
+
+      const response = await /*createVenta(ventaData)*/ postData(ventaData);
+
       if (response.success === "true") {
-        toast.success(`Pedido realizado con éxito! Folio: ${response.folio_pedido}`);
+        toast.success(
+          `Pedido realizado con éxito! Folio: ${response.folio_pedido}`,
+        );
         clearCart();
-        navigate('/');
+        navigate("/");
       } else {
-        toast.error('Error al procesar la venta');
+        toast.error("Error al procesar la venta");
       }
     } catch (error) {
-      console.error('Error en checkout:', error);
-      toast.error(error.message || 'Error al procesar la venta');
-    } finally {
-      setLoading(false);
+      console.error("Error en checkout:", error);
+      toast.error(error.message || "Error al procesar la venta");
     }
   };
 
   if (cartItems.length === 0) {
-    navigate('/cart');
+    navigate("/cart");
     return null;
   }
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Finalizar Compra</h1>
-      
+
       <div className={styles.checkoutGrid}>
         <form onSubmit={handleSubmit} className={styles.form}>
           <h2>Datos del Cliente</h2>
-          
+
           <div className={styles.formGroup}>
             <label>Nombre *</label>
             <input
@@ -91,7 +88,7 @@ const Checkout = () => {
               required
             />
           </div>
-          
+
           <div className={styles.formGroup}>
             <label>Apellido Paterno *</label>
             <input
@@ -102,7 +99,7 @@ const Checkout = () => {
               required
             />
           </div>
-          
+
           <div className={styles.formGroup}>
             <label>Apellido Materno</label>
             <input
@@ -112,17 +109,26 @@ const Checkout = () => {
               onChange={handleChange}
             />
           </div>
-          
-          <button type="submit" disabled={loading} className={styles.submitBtn}>
-            {loading ? 'Procesando...' : `Confirmar Pedido - $${totalPrice.toFixed(2)}`}
+
+          <button
+            type="submit"
+            disabled={loading}
+            onClick={(e) => console.log(data)}
+            className={styles.submitBtn}
+          >
+            {loading
+              ? "Procesando..."
+              : `Confirmar Pedido - $${totalPrice.toFixed(2)}`}
           </button>
         </form>
-        
+
         <div className={styles.orderSummary}>
           <h2>Resumen del Pedido</h2>
-          {cartItems.map(item => (
+          {cartItems.map((item) => (
             <div key={item.id} className={styles.orderItem}>
-              <span>{item.suplemento} x {item.cantidad}</span>
+              <span>
+                {item.suplemento} x {item.cantidad}
+              </span>
               <span>${(item.precio * item.cantidad).toFixed(2)}</span>
             </div>
           ))}
