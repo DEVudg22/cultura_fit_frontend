@@ -5,13 +5,12 @@ import { useCart } from "../../contexts/CartContext";
 import styles from "./Header.module.css";
 
 const Header = () => {
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, logout, token } = useAuth();
   const { totalItems } = useCart();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await logout();
-    navigate("/");
+    await logout(token);
   };
 
   return (
@@ -44,7 +43,7 @@ const Header = () => {
                 </Link>
               )}
               <div className={styles.userMenu}>
-                <span className={styles.userName}>👤 {user?.first_name}</span>
+                <span className={styles.userName}>👤 {user?.user} ({user?.role})</span>
                 <button onClick={handleLogout} className={styles.logoutBtn}>
                   Salir
                 </button>

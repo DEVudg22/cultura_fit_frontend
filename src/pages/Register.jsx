@@ -10,7 +10,8 @@ const Register = () => {
     second_surname: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    role: 'user'
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -75,13 +76,9 @@ const Register = () => {
       last_name: formData.last_name,
       second_surname: formData.second_surname,
       email: formData.email,
-      password: formData.password
+      password: formData.password,
+      role: formData.role
     });
-    
-    if (result.success) {
-      navigate('/');
-    }
-    
     setLoading(false);
   };
 

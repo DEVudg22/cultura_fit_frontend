@@ -48,7 +48,7 @@ const Checkout = () => {
         })),
       };
 
-      const response = await /*createVenta(ventaData)*/ postData(ventaData);
+      /*const response = await createVenta(ventaData) postData(ventaData);
 
       if (response.success === "true") {
         toast.success(
@@ -58,15 +58,21 @@ const Checkout = () => {
         navigate("/");
       } else {
         toast.error("Error al procesar la venta");
-      }
+      }*/
+    const response = await  postData(ventaData);
+    alert("pedido realizado con éxito");
+    clearCart();
+    navigate("/");
+
     } catch (error) {
       console.error("Error en checkout:", error);
       toast.error(error.message || "Error al procesar la venta");
+      alert("error de servidor");
     }
   };
 
   if (cartItems.length === 0) {
-    navigate("/cart");
+    navigate("/");
     return null;
   }
 

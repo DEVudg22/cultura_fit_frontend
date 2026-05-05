@@ -42,21 +42,6 @@ export const authService = {
     });
   },
 
-  // Iniciar sesión validando contra el mock de localStorage
-  async login(email, password) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const user = findUserByEmail(email);
-        if (user && user.password === password) {
-          setCurrentUserData(user);
-          resolve({ status: true, user, message: "Bienvenido a Cultura Fit" });
-        } else {
-          reject({ message: "Correo o contraseña incorrectos" });
-        }
-      }, 500);
-    });
-  },
-
   async logout() {
     clearAuthData();
     return { status: true };

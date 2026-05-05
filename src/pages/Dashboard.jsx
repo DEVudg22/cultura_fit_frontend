@@ -5,35 +5,57 @@ import { saleService } from "../services/saleService";
 import { authService } from "../services/authService";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
 import styles from "./Dashboard.module.css";
+import axios from "axios";
 
 const Dashboard = () => {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const [ventas, setVentas] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("ventas");
 
+
   useEffect(() => {
-    loadData();
+    loadVentas();
+    loadUsuarios();
   }, []);
 
-  const loadData = async () => {
-    try {
+  const loadVentas = async () => {
       setLoading(true);
+      const res = await axios.get("https://app-cebc1114-d7a9-4e24-84f6-4cb3c90eeb6b.cleverapps.io/api/ventas", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },}
+       )
+      .then((res) => {
+        setVentas(res.data);
 
-      // CARGAR VENTAS usando el objeto saleService
-      const ventasData = await saleService.getVentas();
-      setVentas(Array.isArray(ventasData) ? ventasData : []);
-
-      // CARGAR USUARIOS usando el objeto authService
-      const usuariosData = await authService.getUsers();
-      setUsuarios(Array.isArray(usuariosData) ? usuariosData : []);
-    } catch (error) {
-      console.error("Error al cargar datos en el dashboard:", error);
-    } finally {
+      }).catch((e) => {
+        console.error(e);
+        
+      }).finally (() => {
       setLoading(false);
-    }
-  };
+    });
+
+  }
+
+    const loadUsuarios = async () => {
+      setLoading(true);
+      const res = await axios.get("https://app-cebc1114-d7a9-4e24-84f6-4cb3c90eeb6b.cleverapps.io/api/users", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },}
+       )
+      .then((res) => {
+        setUsuarios(res.data);
+
+      }).catch((e) => {
+        console.error(e);
+      
+      }).finally (() => {
+      setLoading(false);
+    });
+  }
 
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
@@ -82,7 +104,7 @@ const Dashboard = () => {
                   <td>#{v.id}</td>
                   <td>{formatDate(v.fecha)}</td>
                   <td>
-                    {v.cliente?.nombre} {v.cliente?.paterno}
+                    {v.cliente} 
                   </td>
                   <td className={styles.amount}>
                     ${v.total_general?.toFixed(2)}

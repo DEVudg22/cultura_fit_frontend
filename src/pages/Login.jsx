@@ -6,20 +6,16 @@ import styles from "./Login.module.css";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { login, token } = useAuth();
+  //const [loading, setLoading] = useState(false);
+  const { login, token, loading, setLoading } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
+   
     const result = await login(email, password);
-
-    if (result.success) {
-      navigate("/");
-    }
     setLoading(false);
+
   };
 
   return (
@@ -60,8 +56,8 @@ const Login = () => {
 
         <div className={styles.demoCredentials}>
           <p>Cuentas de demostración:</p>
-          <p>📧 admin@culturafit.com / admin123 (Admin)</p>
-          <p>📧 juan@example.com / 123456 (Usuario)</p>
+          <p>📧 perez_juan@culturafit.com / 12345 (Admin)</p>
+          <p>📧 maria@culturafit.com / 12345 (Usuario)</p>
         </div>
       </div>
     </div>
