@@ -31,3 +31,13 @@
 .searchInput:focus {
   border-color: #e94560;
 }
+
+.addNewButton {
+  width: 25%;
+  background-color: #e94560;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}

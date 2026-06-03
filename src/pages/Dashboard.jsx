@@ -92,22 +92,28 @@ const Dashboard = () => {
           <table className={styles.table}>
             <thead>
               <tr>
-                <th>ID</th>
+                <th>Folio pedido</th>
                 <th>Fecha</th>
                 <th>Cliente</th>
                 <th>Total</th>
+                <th>Estado</th>
+                <th>Acción</th>
               </tr>
             </thead>
             <tbody>
               {ventas.map((v) => (
-                <tr key={v.id}>
-                  <td>#{v.id}</td>
+                <tr key={v.id_venta}>
+                  <td>{v.id_venta}</td>
                   <td>{formatDate(v.fecha)}</td>
                   <td>
                     {v.cliente} 
                   </td>
                   <td className={styles.amount}>
                     ${v.total_general?.toFixed(2)}
+                  </td>
+                  <td>pendiente, entregado, cancelado</td>
+                  <td className={styles.amount}>
+                    <button className={styles.showDetailsBtn}>VER DETALLE</button>
                   </td>
                 </tr>
               ))}

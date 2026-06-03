@@ -33,7 +33,7 @@
   color: #e94560;
 }
 
-.logoutBtn {
+.logoutBtn, .showDetailsBtn {
   background-color: #ff4444;
   color: white;
   padding: 0.6rem 1.2rem;

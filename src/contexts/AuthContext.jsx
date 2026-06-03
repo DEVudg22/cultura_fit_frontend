@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
             JSON.stringify({ user: res.data.first_name, token: res.data.token, role: res.data.role }),
           );
           
-          navigate("/");
+          navigate("/products");
               
       })
       .catch((error) => {

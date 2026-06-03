@@ -5,6 +5,7 @@ import LoadingSpinner from "../components/Common/LoadingSpinner";
 import styles from "./Home.module.css";
 import { useFetch } from "../hooks/useFetch";
 
+
 const Home = () => {
   const { data, loading, error } = useFetch(
     "https://app-cebc1114-d7a9-4e24-84f6-4cb3c90eeb6b.cleverapps.io/api/inventarios",
@@ -16,16 +17,16 @@ const Home = () => {
     <div className={styles.container}>
       <section className={styles.hero}>
         <div className={styles.heroContent}>
-          <h1>Cultura Fit</h1>
-          <p>Tu tienda de suplementos de confianza en Autlán de Navarro</p>
+          <h1>Tienda de Suplementos</h1>
+          <p>Gracias por visitar este demo de tienda online</p>
           <Link to="/products" className={styles.heroBtn}>
-            Ver Productos
+            Nuestro catálogo
           </Link>
         </div>
       </section>
 
       <section className={styles.featured}>
-        <h2 className={styles.sectionTitle}>Productos Destacados</h2>
+        <h2 className={styles.sectionTitle}>Te podrían interesar</h2>
         <div className={styles.productGrid}>
           {data
             .sort(() => 0.5 - Math.random())

@@ -17,7 +17,7 @@ const Header = () => {
     <header className={styles.header}>
       <div className={styles.container}>
         <Link to="/" className={styles.logo}>
-          <h1>Cultura Fit</h1>
+          <h1>Tienda de Suplementos</h1>
         </Link>
 
         <nav className={styles.nav}>
@@ -54,9 +54,11 @@ const Header = () => {
               <Link to="/login" className={styles.navLink}>
                 Iniciar Sesión
               </Link>
+              {/*
               <Link to="/register" className={styles.registerBtn}>
                 Registrarse
               </Link>
+              */}
             </div>
           )}
         </nav>

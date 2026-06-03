@@ -51,13 +51,12 @@ const Login = () => {
         </form>
 
         <p className={styles.registerLink}>
-          ¿No tienes cuenta? <Link to="/register">Regístrate aquí</Link>
+          Solo para personal autorizado
         </p>
 
         <div className={styles.demoCredentials}>
-          <p>Cuentas de demostración:</p>
-          <p>📧 perez_juan@culturafit.com / 12345 (Admin)</p>
-          <p>📧 maria@culturafit.com / 12345 (Usuario)</p>
+          <p>Cuenta de demostración de administradores:</p>
+          <p>📧 correo: perez_juan@culturafit.com / pass: 12345</p>
         </div>
       </div>
     </div>
