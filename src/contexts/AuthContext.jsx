@@ -16,6 +16,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
 
   const navigate = useNavigate();
+  const url = import.meta.env.VITE_API_URL;
 
   // Verificar si hay una sesión activa al cargar la app
   useEffect(() => {
@@ -29,57 +30,58 @@ export const AuthProvider = ({ children }) => {
 
   //registro en el servidor
   const register = async (userData) => {
-    const res = await axios.post("https://app-cebc1114-d7a9-4e24-84f6-4cb3c90eeb6b.cleverapps.io/api/create-user", userData)
-    .then((res) => {
-      alert("usted se ha registrado correctamente en el sistema, proceda a iniciar sesión");
-      navigate("/login");
-    })
-    .catch((e) => {
-      console.error(e);
-      alert("error de conexión hacia el servidor");
-    })
+    const res = await axios
+      .post(url + "create-user", userData)
+      .then((res) => {
+        alert(
+          "usted se ha registrado correctamente en el sistema, proceda a iniciar sesión",
+        );
+        navigate("/login");
+      })
+      .catch((e) => {
+        console.error(e);
+        alert("error de conexión hacia el servidor");
+      });
   };
-
 
   //login desde el servidor
   const login = async (email, password) => {
-   
     const res = await axios
-      .post("https://app-cebc1114-d7a9-4e24-84f6-4cb3c90eeb6b.cleverapps.io/api/login", {
+      .post(url + "login", {
         email: email,
         password: password,
       })
       .then((res) => {
-        
-          setUser({
+        setUser({
+          user: res.data.first_name,
+          role: res.data.role,
+        });
+        setToken(res.data.token);
+        setIsAuthenticated(true);
+        toast.success(res.data.message);
+
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
             user: res.data.first_name,
-            role: res.data.role
-          });
-          setToken(res.data.token);
-          setIsAuthenticated(true);
-          toast.success(res.data.message);
-          
-          localStorage.setItem(
-            "user",
-            JSON.stringify({ user: res.data.first_name, token: res.data.token, role: res.data.role }),
-          );
-          
-          navigate("/products");
-              
+            token: res.data.token,
+            role: res.data.role,
+          }),
+        );
+
+        navigate("/products");
       })
       .catch((error) => {
         console.error(error);
         toast.error(error.message || "Error al iniciar sesión");
-        alert('Credenciales inválidas');
-       
+        alert("Credenciales inválidas");
       });
   };
-
 
   //logout desde el server
   const logout = async (token) => {
     const res = await axios
-      .get("https://app-cebc1114-d7a9-4e24-84f6-4cb3c90eeb6b.cleverapps.io/api/logout", {
+      .get(url + "logout", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

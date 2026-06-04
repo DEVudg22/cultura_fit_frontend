@@ -8,12 +8,12 @@ import styles from "./Dashboard.module.css";
 import axios from "axios";
 
 const Dashboard = () => {
+  const url = import.meta.env.VITE_API_URL;
   const { user, token } = useAuth();
   const [ventas, setVentas] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("ventas");
-
 
   useEffect(() => {
     loadVentas();
@@ -21,41 +21,42 @@ const Dashboard = () => {
   }, []);
 
   const loadVentas = async () => {
-      setLoading(true);
-      const res = await axios.get("https://app-cebc1114-d7a9-4e24-84f6-4cb3c90eeb6b.cleverapps.io/api/ventas", {
+    setLoading(true);
+    const res = await axios
+      .get(`${url}ventas`, {
         headers: {
           Authorization: `Bearer ${token}`,
-        },}
-       )
+        },
+      })
       .then((res) => {
         setVentas(res.data);
-
-      }).catch((e) => {
+      })
+      .catch((e) => {
         console.error(e);
-        
-      }).finally (() => {
-      setLoading(false);
-    });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
-  }
-
-    const loadUsuarios = async () => {
-      setLoading(true);
-      const res = await axios.get("https://app-cebc1114-d7a9-4e24-84f6-4cb3c90eeb6b.cleverapps.io/api/users", {
+  const loadUsuarios = async () => {
+    setLoading(true);
+    const res = await axios
+      .get(`${url}users`, {
         headers: {
           Authorization: `Bearer ${token}`,
-        },}
-       )
+        },
+      })
       .then((res) => {
         setUsuarios(res.data);
-
-      }).catch((e) => {
+      })
+      .catch((e) => {
         console.error(e);
-      
-      }).finally (() => {
-      setLoading(false);
-    });
-  }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
@@ -105,15 +106,15 @@ const Dashboard = () => {
                 <tr key={v.id_venta}>
                   <td>{v.id_venta}</td>
                   <td>{formatDate(v.fecha)}</td>
-                  <td>
-                    {v.cliente} 
-                  </td>
+                  <td>{v.cliente}</td>
                   <td className={styles.amount}>
                     ${v.total_general?.toFixed(2)}
                   </td>
-                  <td>pendiente, entregado, cancelado</td>
+                  <td>{v.estado}</td>
                   <td className={styles.amount}>
-                    <button className={styles.showDetailsBtn}>VER DETALLE</button>
+                    <button className={styles.showDetailsBtn}>
+                      VER DETALLE
+                    </button>
                   </td>
                 </tr>
               ))}

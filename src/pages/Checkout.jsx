@@ -7,9 +7,8 @@ import styles from "./Checkout.module.css";
 import { usePost } from "../hooks/usePost";
 
 const Checkout = () => {
-  const { data, loading, error, postData } = usePost(
-    "https://app-cebc1114-d7a9-4e24-84f6-4cb3c90eeb6b.cleverapps.io/api/ventas",
-  );
+  const url = import.meta.env.VITE_API_URL;
+  const { data, loading, error, postData } = usePost(url + "ventas");
   const { cartItems, totalPrice, clearCart } = useCart();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -59,11 +58,10 @@ const Checkout = () => {
       } else {
         toast.error("Error al procesar la venta");
       }*/
-    const response = await  postData(ventaData);
-    alert("pedido realizado con éxito");
-    clearCart();
-    navigate("/");
-
+      const response = await postData(ventaData);
+      alert("pedido realizado con éxito");
+      clearCart();
+      navigate("/");
     } catch (error) {
       console.error("Error en checkout:", error);
       toast.error(error.message || "Error al procesar la venta");

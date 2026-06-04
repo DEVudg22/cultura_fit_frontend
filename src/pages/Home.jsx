@@ -5,11 +5,9 @@ import LoadingSpinner from "../components/Common/LoadingSpinner";
 import styles from "./Home.module.css";
 import { useFetch } from "../hooks/useFetch";
 
-
 const Home = () => {
-  const { data, loading, error } = useFetch(
-    "https://app-cebc1114-d7a9-4e24-84f6-4cb3c90eeb6b.cleverapps.io/api/inventarios",
-  );
+  const url = import.meta.env.VITE_API_URL;
+  const { data, loading, error } = useFetch(url + "inventarios");
 
   if (loading) return <LoadingSpinner />;
 

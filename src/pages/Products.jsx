@@ -6,12 +6,11 @@ import { useFetch } from "../hooks/useFetch";
 import ModalStock from "../components/Common/ModalStock";
 
 const Products = () => {
+  const url = import.meta.env.VITE_API_URL;
   //contexto para renderizado condicional
   const { user, token } = useAuth();
   //hook personalizado para realizar peticiones al servidor
-  const { data, loading, error } = useFetch(
-    "https://app-cebc1114-d7a9-4e24-84f6-4cb3c90eeb6b.cleverapps.io/api/inventarios",
-  );
+  const { data, loading, error } = useFetch(url + "inventarios");
 
   //estados locales
   const [searchTerm, setSearchTerm] = useState(""); //estado para capturar la busqueda
