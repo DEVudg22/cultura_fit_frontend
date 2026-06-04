@@ -16,24 +16,33 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <Link to="/" className={styles.logo}>
-          <h1>Tienda de Suplementos</h1>
+        <Link
+          to={(isAuthenticated && "/products") || "/"}
+          className={styles.logo}
+        >
+          <h1>
+            Tienda de Suplementos {isAuthenticated && " - Admnistradores"}
+          </h1>
         </Link>
 
         <nav className={styles.nav}>
-          <Link to="/" className={styles.navLink}>
-            Inicio
-          </Link>
-          <Link to="/products" className={styles.navLink}>
-            Productos
-          </Link>
+          {(isAuthenticated && <></>) || (
+            <Link to="/" className={styles.navLink}>
+              Inicio
+            </Link>
+          )}
 
-          <Link to="/cart" className={styles.cartLink}>
-            🛒 Carrito
-            {totalItems > 0 && (
-              <span className={styles.cartBadge}>{totalItems}</span>
-            )}
+          <Link to="/products" className={styles.navLink}>
+            {(isAuthenticated && "Inventarios") || "Productos"}
           </Link>
+          {(isAuthenticated && <></>) || (
+            <Link to="/cart" className={styles.cartLink}>
+              🛒 Carrito
+              {totalItems > 0 && (
+                <span className={styles.cartBadge}>{totalItems}</span>
+              )}
+            </Link>
+          )}
 
           {isAuthenticated ? (
             <>
@@ -43,7 +52,9 @@ const Header = () => {
                 </Link>
               )}
               <div className={styles.userMenu}>
-                <span className={styles.userName}>👤 {user?.user} ({user?.role})</span>
+                <span className={styles.userName}>
+                  👤 {user?.user} ({user?.role})
+                </span>
                 <button onClick={handleLogout} className={styles.logoutBtn}>
                   Salir
                 </button>

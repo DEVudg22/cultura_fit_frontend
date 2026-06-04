@@ -3,6 +3,7 @@ import ProductList from "../components/Products/ProductList";
 import styles from "./Products.module.css";
 import { useAuth } from "../contexts/AuthContext";
 import { useFetch } from "../hooks/useFetch";
+import ModalStock from "../components/Common/ModalStock";
 
 const Products = () => {
   //contexto para renderizado condicional
@@ -11,7 +12,6 @@ const Products = () => {
   const { data, loading, error } = useFetch(
     "https://app-cebc1114-d7a9-4e24-84f6-4cb3c90eeb6b.cleverapps.io/api/inventarios",
   );
-
 
   //estados locales
   const [searchTerm, setSearchTerm] = useState(""); //estado para capturar la busqueda
@@ -33,14 +33,14 @@ const Products = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Nuestros Productos</h1>
+      {(user?.role === "admin" && (
+        <h1 className={styles.title}>Administración de Inventario</h1>
+      )) || <h1 className={styles.title}>Nuestros Productos</h1>}
 
       {user?.role === "admin" && (
-          <button className={styles.addNewButton}>Agregar nuevo producto</button>
-          /*este boton lanzará un modal para capturar el nuevo producto*/
-          )}
-
-      
+        <button className={styles.addNewButton}>Agregar nuevo producto</button>
+        /*este boton lanzará un modal para capturar el nuevo producto*/
+      )}
 
       <div className={styles.searchSection}>
         <input
