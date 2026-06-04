@@ -12,10 +12,9 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   
+
     const result = await login(email, password);
     setLoading(false);
-
   };
 
   return (
@@ -30,7 +29,7 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder="ejemplo@culturafit.com"
+              placeholder="ejemplo@correo.com"
             />
           </div>
 
@@ -50,13 +49,11 @@ const Login = () => {
           </button>
         </form>
 
-        <p className={styles.registerLink}>
-          Solo para personal autorizado
-        </p>
+        <p className={styles.registerLink}>Solo para personal autorizado</p>
 
         <div className={styles.demoCredentials}>
           <p>Cuenta de demostración de administradores:</p>
-          <p>📧 correo: perez_juan@culturafit.com / pass: 12345</p>
+          <p>📧 correo: johndoe@correo.com / pass: 12345</p>
         </div>
       </div>
     </div>
