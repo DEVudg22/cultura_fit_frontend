@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { usePatch } from "../../hooks/usePatch";
 import Button from "./Button";
 import styles from "./Modalstock.module.css";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-function ModalStock({ id, price }) {
+function ModalStock({ id, price, token }) {
   const [modal, setModal] = useState(false);
+  const [stockPlus, setStockPlus] = useState(0);
   const [newPrice, setNewPrice] = useState("");
+  const url = import.meta.env.VITE_API_URL;
+  const { data, loading, error, patchData } = usePatch(url+'inventarios/'+id);
 
   useEffect(() => {
     setNewPrice(price);
@@ -15,6 +19,16 @@ function ModalStock({ id, price }) {
   const handlePrice = (e) => {
     setNewPrice(e.target.value);
   };
+
+  const handleStock = (e) => {
+    setStockPlus(e.target.value);
+  };
+
+  const updateStock = async () => {
+    const response = await patchData({
+      stock: stockPlus
+    }, token);
+  }
 
   //funcion handle stock
 
@@ -38,17 +52,18 @@ function ModalStock({ id, price }) {
         </ModalHeader>
         <ModalBody>
           <h2>¿Cuántas unidades desea agregar?</h2>
-          <input type="number" className="form-control" />
-          <h2>Puedes modificar el precio si así lo deseas</h2>
+          <input type="number" className="form-control" onChange={handleStock} value={stockPlus} />
+          {/*<h2>Puedes modificar el precio si así lo deseas</h2>
           <input
             type="number"
             className="form-control"
             value={newPrice}
             onChange={handlePrice}
-          />
+          /> */}
+          
         </ModalBody>
         <ModalFooter>
-          <Button onClick={toggle}>Aceptar</Button>{" "}
+          <Button onClick={() => {updateStock();toggle()}}>Aceptar</Button>{" "}
           <Button onClick={toggle}>Cancelar</Button>
         </ModalFooter>
       </Modal>

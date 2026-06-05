@@ -56,6 +56,7 @@ const Products = () => {
         productos={resultados.length > 0 ? resultados : data}
         loading={loading}
         user={user}
+        token={token}
       />
     </div>
   );

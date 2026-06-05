@@ -2,7 +2,7 @@ import React from 'react';
 import ProductCard from './ProductCard';
 import styles from './ProductList.module.css';
 
-const ProductList = ({ productos, loading, user }) => {
+const ProductList = ({ productos, loading, user, token }) => {
   if (loading) {
     return (
       <div className={styles.loading}>
@@ -23,7 +23,7 @@ const ProductList = ({ productos, loading, user }) => {
   return (
     <div className={styles.grid}>
       {productos.map(producto => (
-        <ProductCard key={producto.id} producto={producto} user={user} />
+        <ProductCard key={producto.id} producto={producto} user={user} token={token} />
       ))}
     </div>
   );

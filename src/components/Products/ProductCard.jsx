@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { useCart } from "../../contexts/CartContext";
 import styles from "./ProductCard.module.css";
 import ModalStock from "../Common/ModalStock";
+import { useState } from "react";
 
-const ProductCard = ({ producto, user }) => {
+const ProductCard = ({ producto, user, token }) => {
   const { addToCart } = useCart();
 
   const handleAddToCart = () => {
@@ -62,7 +63,7 @@ const ProductCard = ({ producto, user }) => {
         )}
 
         {user?.role === "admin" && (
-          <ModalStock id={producto.id} price={producto.precio.toFixed(2)} />
+          <ModalStock id={producto.id} price={producto.precio.toFixed(2)} token={token}  />
         )}
       </div>
     </div>
