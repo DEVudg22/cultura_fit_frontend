@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState(null);
+  const [dataChanged, setDataChanged] = useState(false);
 
   const navigate = useNavigate();
   const url = import.meta.env.VITE_API_URL;
@@ -101,7 +102,17 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, isAuthenticated, token, register, login, logout }}
+      value={{
+        user,
+        loading,
+        isAuthenticated,
+        token,
+        register,
+        login,
+        logout,
+        dataChanged,
+        setDataChanged,
+      }}
     >
       {children}
     </AuthContext.Provider>

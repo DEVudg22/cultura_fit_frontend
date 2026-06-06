@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { usePatch } from "../../hooks/usePatch";
+import { useAuth } from "../../contexts/AuthContext";
 import Button from "./Button";
 import styles from "./Modalstock.module.css";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
@@ -9,10 +10,15 @@ function ModalStock({ id, price, token }) {
   const [stockPlus, setStockPlus] = useState(0);
   const [newPrice, setNewPrice] = useState("");
   const url = import.meta.env.VITE_API_URL;
-  const { data, loading, error, patchData } = usePatch(url+'inventarios/'+id);
+  const { data, loading, error, patchData } = usePatch(
+    url + "inventarios/" + id,
+  );
+
+  const { dataChanged, setDataChanged } = useAuth();
 
   useEffect(() => {
     setNewPrice(price);
+    setDataChanged(false);
   }, []);
 
   //funcion para capturar el precio
@@ -25,10 +31,14 @@ function ModalStock({ id, price, token }) {
   };
 
   const updateStock = async () => {
-    const response = await patchData({
-      stock: stockPlus
-    }, token);
-  }
+    const response = await patchData(
+      {
+        stock: stockPlus,
+      },
+      token,
+    );
+    setDataChanged(true);
+  };
 
   //funcion handle stock
 
@@ -52,7 +62,12 @@ function ModalStock({ id, price, token }) {
         </ModalHeader>
         <ModalBody>
           <h2>¿Cuántas unidades desea agregar?</h2>
-          <input type="number" className="form-control" onChange={handleStock} value={stockPlus} />
+          <input
+            type="number"
+            className="form-control"
+            onChange={handleStock}
+            value={stockPlus}
+          />
           {/*<h2>Puedes modificar el precio si así lo deseas</h2>
           <input
             type="number"
@@ -60,10 +75,16 @@ function ModalStock({ id, price, token }) {
             value={newPrice}
             onChange={handlePrice}
           /> */}
-          
         </ModalBody>
         <ModalFooter>
-          <Button onClick={() => {updateStock();toggle()}}>Aceptar</Button>{" "}
+          <Button
+            onClick={() => {
+              updateStock();
+              toggle();
+            }}
+          >
+            Aceptar
+          </Button>{" "}
           <Button onClick={toggle}>Cancelar</Button>
         </ModalFooter>
       </Modal>

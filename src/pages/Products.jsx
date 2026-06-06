@@ -3,12 +3,13 @@ import ProductList from "../components/Products/ProductList";
 import styles from "./Products.module.css";
 import { useAuth } from "../contexts/AuthContext";
 import { useFetch } from "../hooks/useFetch";
+
 import ModalStock from "../components/Common/ModalStock";
 
 const Products = () => {
   const url = import.meta.env.VITE_API_URL;
   //contexto para renderizado condicional
-  const { user, token } = useAuth();
+  const { user, token, dataChanged, setDataChanged } = useAuth();
   //hook personalizado para realizar peticiones al servidor
   const { data, loading, error } = useFetch(url + "inventarios");
 
