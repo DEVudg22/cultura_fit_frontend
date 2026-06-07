@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ProductList from "../components/Products/ProductList";
+import ModalAdd from "../components/Common/ModalAdd";
 import styles from "./Products.module.css";
 import { useAuth } from "../contexts/AuthContext";
 import { useFetch } from "../hooks/useFetch";
@@ -38,7 +39,7 @@ const Products = () => {
       )) || <h1 className={styles.title}>Nuestros Productos</h1>}
 
       {user?.role === "admin" && (
-        <button className={styles.addNewButton}>Agregar nuevo producto</button>
+        <ModalAdd />
         /*este boton lanzará un modal para capturar el nuevo producto*/
       )}
 
