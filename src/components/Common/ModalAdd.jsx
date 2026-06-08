@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { usePost } from "../../hooks/usePost";
 import Button from "./Button";
 import BrandList from "../Products/BrandList";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
@@ -16,6 +17,7 @@ function ModalAdd() {
 
   const url = import.meta.env.VITE_API_URL;
   const { dataChanged, setDataChanged, token } = useAuth();
+  const { data, loading, error, postData } = usePost(`${url}inventarios`);
 
   useEffect(() => {
     setDataChanged(false);
@@ -47,6 +49,27 @@ function ModalAdd() {
   const handleDescription = (e) => {
     setDescription(e.target.value);
   };
+
+  //guardar nuevo producto
+
+  const saveProduct = async (e) => {
+    e.preventDefault();
+    const body = {
+      suplemento_id: selectedSup,
+      marca_id: selectedBrand,
+      presentacion: presentacion,
+      stock: stock,
+      descripcion: description,
+      precio: price,
+      imagen_url: imgUrl
+    }
+
+    const response = await postData(body, token)
+    .then((res) => alert("Producto añadido con éxito"))
+    .catch((e) => console.log("Ocurrio un error al procesar la información: "+e));
+
+    
+  }
 
   //limpiar formulario
 
@@ -141,11 +164,10 @@ function ModalAdd() {
         </ModalBody>
         <ModalFooter>
           <Button
-            onClick={() => {
+            onClick={(e) => {
               toggle();
-              alert(
-                `marca id: ${selectedBrand}, suplemento id: ${selectedSup}, presentación ${presentacion}, precio: ${price}, unidades: ${stock}, img: ${imgUrl}, desc: ${description}`,
-              );
+              saveProduct(e);
+              console.log("Respuesta final: " + data);
               setDataChanged(true);
               clearForm();
             }}
